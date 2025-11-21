@@ -4,93 +4,104 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let mouse = { x: 0, y: 0 };
-let trail = [];
+let particles = [];
 
-// Fare hareketi (çok az parçacık, sadece iz bırakıyor)
+// Fare hareketi → bol parçacık + uzun iz
 window.addEventListener('mousemove', e => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-    if (Math.random() < 0.15) { // %15 ihtimalle spawn, çok az
-        trail.push({
-            x: e.clientX,
-            y: e.clientY,
-            size: Math.random() * 4 + 2,
+    for (let i = 0; i < 12; i++) {  // bol bol parçacık
+        particles.push({
+            x: e.clientX + (Math.random() - 0.5) * 20,
+            y: e.clientY + (Math.random() - 0.5) * 20,
+            size: Math.random() * 6 + 3,
+            speedX: Math.random() * 6 - 3,
+            speedY: Math.random() * 6 - 3,
             life: 0
         });
     }
 });
 
-// Köşelere 4 tane yavaş neon orb
+// Sadece 6 tane büyük, creepy göz (sabit pozisyonlarda)
+const eyes = [
+    { x: canvas.width * 0.2, y: canvas.height * 0.25 },
+    { x: canvas.width * 0.8, y: canvas.height * 0.3 },
+    { x: canvas.width * 0.35, y: canvas.height * 0.65 },
+    { x: canvas.width * 0.7, y: canvas.height * 0.7 },
+    { x: canvas.width * 0.15, y: canvas.height * 0.75 },
+    { x: canvas.width * 0.85, y: canvas.height * 0.15 }
+];
+
+// Tam köşede 4 tane küçük neon top (hafif hareketli)
 const orbs = [
-    { x: 100, y: 100, targetX: canvas.width - 100, targetY: 100 },
-    { x: canvas.width - 100, y: 100, targetX: canvas.width - 100, targetY: canvas.height - 100 },
-    { x: canvas.width - 100, y: canvas.height - 100, targetX: 100, targetY: canvas.height - 100 },
-    { x: 100, y: canvas.height - 100, targetX: 100, targetY: 100 }
+    { x: 80, y: 80 },
+    { x: canvas.width - 80, y: 80 },
+    { x: canvas.width - 80, y: canvas.height - 80 },
+    { x: 80, y: canvas.height - 80 }
 ];
 
 function drawEyes() {
-    // 10 tane göz rastgele yerleştir (sabit pozisyon)
-    for (let i = 0; i < 10; i++) {
-        let ex = (canvas.width / 11) * (i + 1);
-        let ey = canvas.height / 2 + Math.sin(i) * 200;
-
+    eyes.forEach(eye => {
         // Göz beyazı
         ctx.fillStyle = '#fff';
         ctx.beginPath();
-        ctx.arc(ex, ey, 40, 0, Math.PI * 2);
+        ctx.arc(eye.x, eye.y, 50, 0, Math.PI * 2);
         ctx.fill();
 
-        // Göz bebeği (fareyi takip eder)
-        let angle = Math.atan2(mouse.y - ey, mouse.x - ex);
-        let pupilX = ex + Math.cos(angle) * 18;
-        let pupilY = ey + Math.sin(angle) * 18;
+        // Fare yönüne göre iris hareketi
+        const angle = Math.atan2(mouse.y - eye.y, mouse.x - eye.x);
+        const dist = Math.min(20, Math.hypot(mouse.x - eye.x, mouse.y - eye.y) / 10);
+        const irisX = eye.x + Math.cos(angle) * dist;
+        const irisY = eye.y + Math.sin(angle) * dist;
 
+        // Siyah iris
         ctx.fillStyle = '#000';
         ctx.beginPath();
-        ctx.arc(pupilX, pupilY, 18, 0, Math.PI * 2);
+        ctx.arc(irisX, irisY, 28, 0, Math.PI * 2);
         ctx.fill();
 
-        // Parlama
+        // Küçük beyaz parlama
         ctx.fillStyle = '#fff';
         ctx.beginPath();
-        ctx.arc(pupilX - 5, pupilY - 5, 6, 0, Math.PI * 2);
+        ctx.arc(irisX + 8, irisY - 8, 10, 0, Math.PI * 2);
         ctx.fill();
-    }
+    });
 }
 
 function drawOrbs() {
-    orbs.forEach((orb, i) => {
-        // Yavaş yavaş köşeler arasında dolaşsın
-        orb.x += (orb.targetX - orb.x) * 0.00005;
-        orb.y += (orb.targetY - orb.y) * 0.00005;
-
-        let gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, 120);
-        gradient.addColorStop(0, 'rgba(0, 255, 136, 0.6)');
-        gradient.addColorStop(1, 'rgba(0, 255, 136, 0)');
+    orbs.forEach(orb => {
+        const gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, 80);
+        gradient.addColorStop(0, '#00ff88');
+        gradient.addColorStop(0.3, '#00ff8830');
+        gradient.addColorStop(1, '#00ff8800');
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(orb.x, orb.y, 120, 0, Math.PI * 2);
+        ctx.arc(orb.x, orb.y, 80, 0, Math.PI * 2);
         ctx.fill();
     });
 }
 
 function animate() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     drawEyes();
     drawOrbs();
 
-    // Hafif trail efekti
-    trail.forEach((p, i) => {
+    // Parçacıklar
+    particles.forEach((p, i) => {
         p.life++;
+        p.x += p.speedX;
+        p.y += p.speedY;
         p.size *= 0.96;
-        ctx.fillStyle = `rgba(0, 255, 136, ${1 - p.life / 30})`;
+
+        ctx.fillStyle = `rgba(0, 255, 136, ${1 - p.life / 40})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
-        if (p.life > 30) trail.splice(i, 1);
+
+        if (p.life > 40 || p.size < 0.5) particles.splice(i, 1);
     });
 
     requestAnimationFrame(animate);
@@ -100,4 +111,9 @@ animate();
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    eyes[0].x = canvas.width * 0.2; eyes[1].x = canvas.width * 0.8;
+    eyes[2].x = canvas.width * 0.35; eyes[3].x = canvas.width * 0.7;
+    eyes[4].x = canvas.width * 0.15; eyes[5].x = canvas.width * 0.85;
+    orbs[1].x = orbs[2].x = canvas.width - 80;
+    orbs[2].y = orbs[3].y = canvas.height - 80;
 });
