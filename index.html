@@ -3,36 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeHeaven</title>
+    <title>CodeHeaven | Full-Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="bg"></canvas>
+    <div class="cursor"></div>
 
-    <div class="title">CodeHeaven</div>
-    <div class="subtitle">Full-Stack Developer</div>
+    <header>
+        <h1>CodeHeaven</h1>
+        <p class="tagline">Full-Stack Developer & Creative Coder</p>
+        <p class="desc">Next.js • React • Node.js • Three.js • AI • WebGL</p>
+        <a href="#projects" class="btn">View Projects ↓</a>
+    </header>
 
-    <!-- 7 Göz (3'ü tıklanabilir + sabit, 4'ü dönen) -->
-    <div class="eye clickable fixed" data-section="about"><span>About</span></div>
-    <div class="eye clickable fixed" data-section="projects"><span>Projects</span></div>
-    <div class="eye clickable fixed" data-section="contact"><span>Contact</span></div>
-    <div class="eye rotating"></div>
-    <div class="eye rotating"></div>
-    <div class="eye rotating"></div>
-    <div class="eye rotating"></div>
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="grid">
+            <div class="card">Project 1<br><span>Coming Soon</span></div>
+            <div class="card">Project 2<br><span>Coming Soon</span></div>
+            <div class="card">Project 3<br><span>Coming Soon</span></div>
+        </div>
+    </section>
 
-    <!-- Lamba tutan fare (sağlam link) -->
-    <img src="https://files.catbox.moe/05h3zn.png" id="mouse" alt="mouse">
-
-    <!-- Açılan bölümler -->
-    <div id="about" class="modal"><div class="content">I'm CodeHeaven<br>React • Next.js • Node.js • Three.js</div></div>
-    <div id="projects" class="modal"><div class="content">Epic projects coming soon 🔥</div></div>
-    <div id="contact" class="modal"><div class="content">hello@codeheaven.dev</div></div>
-
-    <!-- Müzik -->
-    <audio autoplay loop volume="0.3">
-        <source src="https://cdn.pixabay.com/download/audio/2023/03/23/audio_943d3a9e3e.mp3?filename=lofi-study-112191.mp3" type="audio/mp3">
-    </audio>
+    <footer>
+        <p>hello@codeheaven.dev • © 2025</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
