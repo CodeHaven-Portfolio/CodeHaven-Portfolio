@@ -3,28 +3,41 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const letters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-const fontSize = 14;
-const columns = canvas.width / fontSize;
-const drops = Array(Math.floor(columns)).fill(1);
+let drops = [];
 
-function draw() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#00ffff';
-    ctx.font = fontSize + 'px monospace';
-
-    for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-            drops[i] = 0;
-
-        drops[i]++;
+class Drop {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.speed = Math.random() * 4 + 2;
+        this.length = Math.random() * 20 + 10;
+        this.thickness = Math.random() * 2 + 1;
+    }
+    fall() {
+        this.y += this.speed;
+        if (this.y > canvas.height) this.y = -20;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x, this.y + this.length);
+        ctx.strokeStyle = 'rgba(0, 200, 255, 0.6)';
+        ctx.lineWidth = this.thickness;
+        ctx.stroke();
     }
 }
-setInterval(draw, 33);
+
+for(let i = 0; i < 300; i++) drops.push(new Drop());
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drops.forEach(drop => {
+        drop.fall();
+        drop.draw();
+    });
+    requestAnimationFrame(animate);
+}
+animate();
 
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
