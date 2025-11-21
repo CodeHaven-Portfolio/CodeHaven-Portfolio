@@ -1,77 +1,39 @@
-const bg = document.getElementById('bg');
-const beam = document.getElementById('beam');
-const ctxBg = bg.getContext('2d');
-const ctxBeam = beam.getContext('2d');
+const mouseImg = document.getElementById('mouse');
+const eyes = document.querySelectorAll('.eye');
+const sections = document.querySelectorAll('.section');
 
-bg.width = beam.width = window.innerWidth;
-bg.height = beam.height = window.innerHeight;
+document.addEventListener('mousemove', (e) => {
+    mouseImg.style.left = e.clientX - 75 + 'px';
+    mouseImg.style.top = e.clientY - 75 + 'px';
 
-const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-
-// Matrix Rain
-const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
-const columns = bg.width / 20;
-const drops = Array(Math.floor(columns)).fill(1);
-
-function drawMatrix() {
-    ctxBg.fillStyle = 'rgba(0,0,0,0.04)';
-    ctxBg.fillRect(0,0,bg.width,bg.height);
-    ctxBg.fillStyle = '#0f0';
-    ctxBg.font = '15px monospace';
-
-    for(let i = 0; i < drops.length; i++) {
-        const text = matrix[Math.floor(Math.random()*matrix.length)];
-        ctxBg.fillText(text, i*20, drops[i]*20);
-        if(drops[i]*20 > bg.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-    }
-}
-
-// Mouse Beam + Particles
-const particles = [];
-function createParticle(x, y) {
-    particles.push({
-        x, y,
-        vx: (Math.random()-0.5)*8,
-        vy: (Math.random()-0.5)*8,
-        life: 1,
-        color: `hsl(${Math.random()*60 + 180},100%,50%)`
+    eyes.forEach(eye => {
+        const rect = eye.getBoundingClientRect();
+        const eyeX = rect.left + rect.width / 2;
+        const eyeY = rect.top + rect.height / 2;
+        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+        const pupil = eye.querySelector('::after') || eye;
+        const dist = Math.min(20, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 10);
+        pupil.style.left = 50 + Math.cos(angle) * dist + '%';
+        pupil.style.top = 50 + Math.sin(angle) * dist + '%';
     });
-}
-
-function drawBeam() {
-    ctxBeam.clearRect(0,0,beam.width,beam.height);
-    const gradient = ctxBeam.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 300);
-    gradient.addColorStop(0, 'rgba(0,255,255,0.3)');
-    gradient.addColorStop(1, 'transparent');
-    ctxBeam.fillStyle = gradient;
-    ctxBeam.fillRect(0,0,beam.width,beam.height);
-
-    particles.forEach((p,i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life -= 0.02;
-        ctxBeam.globalAlpha = p.life;
-        ctxBeam.fillStyle = p.color;
-        ctxBeam.fillRect(p.x, p.y, 4, 4);
-        if(p.life <= 0) particles.splice(i,1);
-    });
-}
-
-window.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    for(let i = 0; i < 10; i++) createParticle(e.clientX, e.clientY);
 });
 
-function animate() {
-    drawMatrix();
-    drawBeam();
-    requestAnimationFrame(animate);
-}
-animate();
+// Rastgele göz konumları
+eyes.forEach(eye => {
+    eye.style.left = Math.random() * 80 + 10 + '%';
+    eye.style.top = Math.random() * 80 + 10 + '%';
+});
 
-window.addEventListener('resize', () => {
-    bg.width = beam.width = window.innerWidth;
-    bg.height = beam.height = window.innerHeight;
+// Tıklama ile bölüm aç
+eyes.forEach(eye => {
+    if (eye.dataset.section) {
+        eye.addEventListener('click', () => {
+            document.getElementById(eye.dataset.section).style.display = 'flex';
+        });
+    }
+});
+
+// Bölümden çıkmak için herhangi yere tıkla
+sections.forEach(sec => {
+    sec.addEventListener('click', () => sec.style.display = 'none');
 });
