@@ -3,62 +3,99 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let particles = [];
-const mouse = { x: 0, y: 0 };
+let mouse = { x: 0, y: 0 };
+let trail = [];
 
+// Fare hareketi (çok az parçacık, sadece iz bırakıyor)
 window.addEventListener('mousemove', e => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-    for (let i = 0; i < 8; i++) {  // fareyi takip ederken bolca parçacık
-        particles.push(new Particle(mouse.x, mouse.y));
+    if (Math.random() < 0.15) { // %15 ihtimalle spawn, çok az
+        trail.push({
+            x: e.clientX,
+            y: e.clientY,
+            size: Math.random() * 4 + 2,
+            life: 0
+        });
     }
 });
 
-class Particle {
-    constructor(x, y) {
-        this.x = x || Math.random() * canvas.width;
-        this.y = y || Math.random() * canvas.height;
-        this.size = Math.random() * 4 + 1;
-        this.speedX = Math.random() * 3 - 1.5;
-        this.speedY = Math.random() * 3 - 1.5;
-        this.color = `hsl(${Math.random()*60 + 160}, 100%, 50%)`; // cyan-yeşil tonlar
-    }
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.size > 0.2) this.size -= 0.03;
-    }
-    draw() {
-        ctx.fillStyle = this.color;
+// Köşelere 4 tane yavaş neon orb
+const orbs = [
+    { x: 100, y: 100, targetX: canvas.width - 100, targetY: 100 },
+    { x: canvas.width - 100, y: 100, targetX: canvas.width - 100, targetY: canvas.height - 100 },
+    { x: canvas.width - 100, y: canvas.height - 100, targetX: 100, targetY: canvas.height - 100 },
+    { x: 100, y: canvas.height - 100, targetX: 100, targetY: 100 }
+];
+
+function drawEyes() {
+    // 10 tane göz rastgele yerleştir (sabit pozisyon)
+    for (let i = 0; i < 10; i++) {
+        let ex = (canvas.width / 11) * (i + 1);
+        let ey = canvas.height / 2 + Math.sin(i) * 200;
+
+        // Göz beyazı
+        ctx.fillStyle = '#fff';
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(ex, ey, 40, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Göz bebeği (fareyi takip eder)
+        let angle = Math.atan2(mouse.y - ey, mouse.x - ex);
+        let pupilX = ex + Math.cos(angle) * 18;
+        let pupilY = ey + Math.sin(angle) * 18;
+
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(pupilX, pupilY, 18, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Parlama
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(pupilX - 5, pupilY - 5, 6, 0, Math.PI * 2);
         ctx.fill();
     }
 }
 
-function handleParticles() {
-    for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].size <= 0.3) {
-            particles.splice(i, 1);
-            i--;
-        }
-    }
+function drawOrbs() {
+    orbs.forEach((orb, i) => {
+        // Yavaş yavaş köşeler arasında dolaşsın
+        orb.x += (orb.targetX - orb.x) * 0.00005;
+        orb.y += (orb.targetY - orb.y) * 0.00005;
+
+        let gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, 120);
+        gradient.addColorStop(0, 'rgba(0, 255, 136, 0.6)');
+        gradient.addColorStop(1, 'rgba(0, 255, 136, 0)');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(orb.x, orb.y, 120, 0, Math.PI * 2);
+        ctx.fill();
+    });
 }
 
 function animate() {
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    handleParticles();
+
+    drawEyes();
+    drawOrbs();
+
+    // Hafif trail efekti
+    trail.forEach((p, i) => {
+        p.life++;
+        p.size *= 0.96;
+        ctx.fillStyle = `rgba(0, 255, 136, ${1 - p.life / 30})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        if (p.life > 30) trail.splice(i, 1);
+    });
+
     requestAnimationFrame(animate);
 }
 animate();
-
-// Arka plan yıldızları da ekleyelim (sabit + yavaş hareketli)
-for (let i = 0; i < 200; i++) {
-    particles.push(new Particle());
-}
 
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
