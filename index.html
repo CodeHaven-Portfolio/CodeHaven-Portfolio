@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeHeaven | Full-Stack Developer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>CodeHeaven | UI • Script • Animation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="cursor"></div>
+    <canvas id="matrix"></canvas>
 
     <header>
-        <h1>CodeHeaven</h1>
-        <p class="tagline">Full-Stack Developer & Creative Coder</p>
-        <p class="desc">Next.js • React • Node.js • Three.js • AI • WebGL</p>
-        <a href="#projects" class="btn">View Projects ↓</a>
+        <h1 class="glitch" data-text="CodeHeaven">CodeHeaven</h1>
+        <p class="neon-text">UI Designer • Creative Scripter • Animation Master</p>
+        <p class="skills">HTML • CSS • JavaScript • GS(gsap • Three.js • Canvas • WebGL • Shader</p>
+        <div class="buttons">
+            <a href="#works" class="neon-btn">Works</a>
+            <a href="#contact" class="neon-btn">Contact</a>
+        </div>
     </header>
 
-    <section id="projects">
-        <h2>Projects</h2>
+    <section id="works">
+        <h2 class="glitch" data-text="Works">Works</h2>
         <div class="grid">
-            <div class="card">Project 1<br><span>Coming Soon</span></div>
-            <div class="card">Project 2<br><span>Coming Soon</span></div>
-            <div class="card">Project 3<br><span>Coming Soon</span></div>
+            <div class="card neon-card" data-tilt>
+                <h3>Particle Madness</h3>
+                <p>30k particles + mouse interaction</p>
+            </div>
+            <div class="card neon-card" data-tilt>
+                <h3>Glitch Menu</h3>
+                <p>RGB split + distortion effects</p>
+            </div>
+            <div class="card neon-card" data-tilt>
+                <h3>3D UI Experiments</h3>
+                <p>Three.js + React Three Fiber</p>
+            </div>
         </div>
     </section>
-
-    <footer>
-        <p>hello@codeheaven.dev • © 2025</p>
-    </footer>
 
     <script src="script.js"></script>
 </body>
