@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeHeaven</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body,html{height:100%;overflow:hidden;background:#000;}
+        video{position:fixed;top:0;left:0;min-width:100%;min-height:100%;width:auto;height:auto;z-index:-1;object-fit:cover;}
+        .overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:1;}
+        .billboard{background:rgba(0,0,0,0.75);padding:40px 100px;border:6px solid #0ff;box-shadow:0 0 100px #0ff, inset 0 0 60px rgba(0,255,255,0.2);border-radius:25px;text-align:center;animation:flicker 6s infinite alternate;}
+        h1{font-size:8rem;color:#0ff;text-shadow:0 0 50px #0ff;margin-bottom:20px;animation:glow 2s infinite alternate;}
+        p{font-size:2.8rem;color:#0ff;margin:20px 0;}
+        .buttons{margin-top:60px;display:flex;gap:40px;flex-wrap:wrap;justify-content:center;}
+        .btn{padding:20px 50px;background:transparent;border:5px solid #0ff;color:#0ff;font-size:2rem;text-decoration:none;border-radius:15px;box-shadow:0 0 40px #0ff;transition:0.4s;}
+        .btn:hover{background:#0ff;color:#000;box-shadow:0 0 80px #0ff;transform:scale(1.15);}
+        @keyframes flicker{0%,100%{opacity:1;box-shadow:0 0 100px #0ff;}50%{opacity:0.9;box-shadow:0 0 120px #0ff;}}
+        @keyframes glow{from{text-shadow:0 0 30px #0ff;}to{text-shadow:0 0 80px #0ff;}}
+    </style>
 </head>
 <body>
-    <!-- Pixel gece şehri arka plan (parallax) -->
-    <div class="bg-layer far"></div>
-    <div class="bg-layer mid"></div>
-    <div class="bg-layer close"></div>
 
-    <!-- Düz pixel yağmur -->
-    <canvas id="rain"></canvas>
+    <!-- SENİN VİDEON -->
+    <video autoplay muted loop playsinline>
+        <source src="mylivewallpapers.com-Pixel-Bad-City.mp4" type="video/mp4">
+        Tarayıcın video desteklemiyor.
+    </video>
 
-    <!-- Büyük neon pankart (orta) -->
-    <div class="billboard">
-        <h1>CodeHeaven</h1>
-        <p>Roblox UI Designer • Scripter • Animator</p>
+    <div class="overlay">
+        <div class="billboard">
+            <h1>CodeHeaven</h1>
+            <p>Roblox UI Designer • Scripter • Animator</p>
+        </div>
+
+        <div class="buttons">
+            <a href="https://www.roblox.com/users/8721090214/profile" target="_blank" class="btn">Roblox Profile</a>
+            <a href="https://www.youtube.com/@Honored_Kaiser" target="_blank" class="btn">YouTube</a>
+            <a href="https://discord.com/users/1289899895330832414" target="_blank" class="btn">Discord</a>
+            <a href="https://guns.lol/honored_kaiser" target="_blank" class="btn">Guns.lol</a>
+        </div>
     </div>
 
-    <!-- Butonlar -->
-    <div class="buttons">
-        <a href="https://www.roblox.com/users/8721090214/profile" target="_blank" class="btn roblox">Roblox Profile</a>
-        <a href="https://www.youtube.com/@Honored_Kaiser" target="_blank" class="btn youtube">YouTube</a>
-        <a href="https://discord.com/users/1289899895330832414" target="_blank" class="btn discord">Discord</a>
-        <a href="https://guns.lol/honored_kaiser" target="_blank" class="btn guns">Guns.lol</a>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
