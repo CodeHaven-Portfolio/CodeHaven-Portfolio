@@ -1,16 +1,22 @@
 * {margin:0;padding:0;box-sizing:border-box;}
-body {background:#000;overflow:hidden;cursor:none;}
-.title {position:absolute;top:15%;left:50%;transform:translateX(-50%);font-size:7rem;color:#00ffff;text-shadow:0 0 40px #00ffff;z-index:10;}
-.subtitle {position:absolute;top:30%;left:50%;transform:translateX(-50%);color:#0f8;font-size:1.5rem;z-index:10;}
+body {background:#0a0a0a;color:#fff;font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
+.cursor {position:fixed;width:30px;height:30px;border:2px solid #0ff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:0.1s;mix-blend-mode:difference;}
 
-.eye {position:absolute;width:140px;height:140px;background:#fff;border-radius:50%;box-shadow:0 0 60px #0ff;z-index:5;}
-.eye span {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:bold;font-size:1.6rem;color:#000;z-index:6;}
-.eye::after {content:'';position:absolute;width:60px;height:60px;background:#000;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);transition:0.1s;}
+header {height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#000428,#004e92);position:relative;}
+header::before {content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 50%,rgba(0,255,255,0.1),transparent 70%);animation:pulse 8s infinite;}
+h1 {font-family:'Orbitron',sans-serif;font-size:9rem;background:linear-gradient(90deg,#0ff,#f and #f0f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:glow 2s infinite alternate;}
+.tagline {font-size:2.5rem;margin:20px 0;letter-spacing:5px;color:#0ff;}
+.desc {font-size:1.5rem;margin-bottom:50px;color:#aaa;}
+.btn {padding:20px 50px;background:transparent;border:3px solid #0ff;color:#0ff;font-size:1.5rem;border-radius:50px;text-decoration:none;transition:0.5s;box-shadow:0 0 30px #0ff;}
+.btn:hover {background:#0ff;color:#000;box-shadow:0 0 50px #0ff;transform:scale(1.1);}
 
-.rotating {animation:spin 20s linear infinite;}
-@keyframes spin {from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+#projects {padding:150px 50px;text-align:center;background:#000;}
+h2 {font-size:5rem;margin-bottom:100px;color:#0ff;text-shadow:0 0 30px #0ff;}
+.grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;max-width:1200px;margin:0 auto;}
+.card {background:rgba(0,255,255,0.05);border:1px solid #0ff;border-radius:20px;padding:50px;text-align:center;font-size:2rem;transition:0.5s;box-shadow:0 0 30px transparent;}
+.card:hover {transform:translateY(-20px);box-shadow:0 0 60px #0ff;background:rgba(0,255,255,0.1);}
 
-#mouse {position:fixed;width:180px;pointer-events:none;z-index:20;transform:translate(-50%,-50%);transition:0.05s;}
+footer {text-align:center;padding:50px;font-size:1.2rem;color:#0ff;}
 
-.modal {display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:30;justify-content:center;align-items:center;}
-.content {font-size:3rem;text-align:center;color:#0ff;text-shadow:0 0 30px #0ff;}
+@keyframes glow {from{text-shadow:0 0 20px #0ff;}to{text-shadow:0 0 60px #0ff;}}
+@keyframes pulse {0%,100%{opacity:0.3;}50%{opacity:0.8;}}
