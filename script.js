@@ -1,39 +1,44 @@
+const mouse = { x: 0, y: 0 };
 const mouseImg = document.getElementById('mouse');
-const eyes = document.querySelectorAll('.eye');
-const sections = document.querySelectorAll('.section');
 
 document.addEventListener('mousemove', (e) => {
-    mouseImg.style.left = e.clientX - 75 + 'px';
-    mouseImg.style.top = e.clientY - 75 + 'px';
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    mouseImg.style.left = e.clientX + 'px';
+    mouseImg.style.top = e.clientY + 'px';
 
-    eyes.forEach(eye => {
+    document.querySelectorAll('.eye').forEach(eye => {
         const rect = eye.getBoundingClientRect();
-        const eyeX = rect.left + rect.width / 2;
-        const eyeY = rect.top + rect.height / 2;
-        const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-        const pupil = eye.querySelector('::after') || eye;
-        const dist = Math.min(20, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 10);
-        pupil.style.left = 50 + Math.cos(angle) * dist + '%';
-        pupil.style.top = 50 + Math.sin(angle) * dist + '%';
+        const ex = rect.left + rect.width / 2;
+        const ey = rect.top + rect.height / 2;
+        const angle = Math.atan2(mouse.y - ey, mouse.x - ex);
+        const distance = Math.min(25, Math.hypot(mouse.x - ex, mouse.y - ey) / 8);
+
+        // Sadece göz bebeğini hareket ettir (dönen gözlerde bile)
+        eye.style.setProperty('--px', 50 + Math.cos(angle) * distance + '%');
+        eye.style.setProperty('--py', 50 + Math.sin(angle) * distance + '%');
     });
 });
 
-// Rastgele göz konumları
-eyes.forEach(eye => {
-    eye.style.left = Math.random() * 80 + 10 + '%';
-    eye.style.top = Math.random() * 80 + 10 + '%';
+// CSS variable ile göz bebeği hareketi
+const style = document.createElement('style');
+style.innerHTML = `.eye::after { left: var(--px, 50%); top: var(--py, 50%); }`;
+document.head.appendChild(style);
+
+// Rastgele konum
+document.querySelectorAll('.eye').forEach(eye => {
+    eye.style.left = Math.random() * 75 + 10 + '%';
+    eye.style.top = Math.random() * 75 + 10 + '%';
 });
 
-// Tıklama ile bölüm aç
-eyes.forEach(eye => {
-    if (eye.dataset.section) {
-        eye.addEventListener('click', () => {
-            document.getElementById(eye.dataset.section).style.display = 'flex';
-        });
-    }
+// Tıklama
+document.querySelectorAll('.clickable').forEach(eye => {
+    eye.addEventListener('click', () => {
+        const section = eye.dataset.section;
+        document.getElementById(section).style.display = 'flex';
+    });
 });
 
-// Bölümden çıkmak için herhangi yere tıkla
-sections.forEach(sec => {
-    sec.addEventListener('click', () => sec.style.display = 'none');
+document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', () => m.style.display = 'none');
 });
