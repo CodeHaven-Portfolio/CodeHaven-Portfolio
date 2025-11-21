@@ -8,33 +8,30 @@
 </head>
 <body>
     <canvas id="bg"></canvas>
-    
+
     <div class="title">CodeHeaven</div>
     <div class="subtitle">Full-Stack Developer</div>
 
-    <!-- Gözler (3 tanesi tıklanabilir menü) -->
-    <div class="eye" data-section="about"><span>About</span></div>
-    <div class="eye" data-section="projects"><span>Projects</span></div>
-    <div class="eye" data-section="contact"><span>Contact</span></div>
-    <div class="eye"></div>
-    <div class="eye"></div>
-    <div class="eye"></div>
-    <div class="eye"></div>
-    <div class="eye"></div>
-    <div class="eye"></div>
-    <div class="eye"></div>
+    <!-- 7 Göz (3'ü tıklanabilir + sabit, 4'ü dönen) -->
+    <div class="eye clickable fixed" data-section="about"><span>About</span></div>
+    <div class="eye clickable fixed" data-section="projects"><span>Projects</span></div>
+    <div class="eye clickable fixed" data-section="contact"><span>Contact</span></div>
+    <div class="eye rotating"></div>
+    <div class="eye rotating"></div>
+    <div class="eye rotating"></div>
+    <div class="eye rotating"></div>
 
-    <!-- Fare -->
-    <img src="https://i.ibb.co.com/5kJ9Y3F/mouse.png" id="mouse" alt="mouse">
+    <!-- Lamba tutan fare (sağlam link) -->
+    <img src="https://files.catbox.moe/05h3zn.png" id="mouse" alt="mouse">
 
-    <!-- Bölümler (tıklayınca açılacak) -->
-    <div id="about" class="section"><div class="content">Hi, I'm CodeHeaven<br>Full-Stack Developer • React • Node.js • Next.js</div></div>
-    <div id="projects" class="section"><div class="content">Projects coming soon 🔥</div></div>
-    <div id="contact" class="section"><div class="content">hello@codeheaven.dev</div></div>
+    <!-- Açılan bölümler -->
+    <div id="about" class="modal"><div class="content">I'm CodeHeaven<br>React • Next.js • Node.js • Three.js</div></div>
+    <div id="projects" class="modal"><div class="content">Epic projects coming soon 🔥</div></div>
+    <div id="contact" class="modal"><div class="content">hello@codeheaven.dev</div></div>
 
-    <!-- Arka plan müziği -->
-    <audio autoplay loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/21/audio_8f7f5c9f1e.mp3?filename=lofi-chill-ambient-114934.mp3" type="audio/mp3">
+    <!-- Müzik -->
+    <audio autoplay loop volume="0.3">
+        <source src="https://cdn.pixabay.com/download/audio/2023/03/23/audio_943d3a9e3e.mp3?filename=lofi-study-112191.mp3" type="audio/mp3">
     </audio>
 
     <script src="script.js"></script>
