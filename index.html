@@ -3,58 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeHeaven - Roblox Developer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>CodeHeaven</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- MAVİ YAĞMUR ARKA PLAN -->
+    <!-- Pixel gece şehri arka plan (parallax) -->
+    <div class="bg-layer far"></div>
+    <div class="bg-layer mid"></div>
+    <div class="bg-layer close"></div>
+
+    <!-- Düz pixel yağmur -->
     <canvas id="rain"></canvas>
 
-    <div class="container">
-        <header>
-            <h1>CodeHeaven</h1>
-            <p class="role">Roblox UI Designer • Scripter • Animator</p>
-            <p class="bio">Roblox oyunları için temiz UI, Lua script ve animasyon yapıyorum.</p>
-            <div class="links">
-                <a href="https://www.roblox.com/users/CHANGE/profile" target="_blank">Roblox Profile</a>
-                <a href="mailto:yourmail@example.com">Email</a>
-            </div>
-        </header>
+    <!-- Büyük neon pankart (orta) -->
+    <div class="billboard">
+        <h1>CodeHeaven</h1>
+        <p>Roblox UI Designer • Scripter • Animator</p>
+    </div>
 
-        <section class="skills">
-            <h2>Skills</h2>
-            <ul>
-                <li>UI Design</li>
-                <li>Scripting (Lua / Luau)</li>
-                <li>Animation</li>
-                <li>Tween & Spring</li>
-                <li>ModuleScript</li>
-                <li>Custom UI Systems</li>
-            </ul>
-        </section>
-
-        <section class="works">
-            <h2>Works</h2>
-            <div class="grid">
-                <div class="project">
-                    <h3>Project 1</h3>
-                    <p>Açıklama buraya</p>
-                </div>
-                <div class="project">
-                    <h3>Project 2</h3>
-                    <p>Açıklama buraya</p>
-                </div>
-                <div class="project">
-                    <h3>Project 3</h3>
-                    <p>Açıklama buraya</p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2025 CodeHeaven – Available for hire</p>
-        </footer>
+    <!-- Butonlar -->
+    <div class="buttons">
+        <a href="https://www.roblox.com/users/8721090214/profile" target="_blank" class="btn roblox">Roblox Profile</a>
+        <a href="https://www.youtube.com/@Honored_Kaiser" target="_blank" class="btn youtube">YouTube</a>
+        <a href="https://discord.com/users/1289899895330832414" target="_blank" class="btn discord">Discord</a>
+        <a href="https://guns.lol/honored_kaiser" target="_blank" class="btn guns">Guns.lol</a>
     </div>
 
     <script src="script.js"></script>
