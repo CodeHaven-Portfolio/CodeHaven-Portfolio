@@ -7,24 +7,26 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         body,html{height:100%;overflow:hidden;background:#000;}
-        video{position:fixed;top:0;left:0;min-width:100%;min-height:100%;width:auto;height:auto;z-index:-1;object-fit:cover;}
+        video{position:fixed;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);z-index:-1;object-fit:cover;}
         .overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:1;}
-        .billboard{background:rgba(0,0,0,0.75);padding:40px 100px;border:6px solid #0ff;box-shadow:0 0 100px #0ff, inset 0 0 60px rgba(0,255,255,0.2);border-radius:25px;text-align:center;animation:flicker 6s infinite alternate;}
-        h1{font-size:8rem;color:#0ff;text-shadow:0 0 50px #0ff;margin-bottom:20px;animation:glow 2s infinite alternate;}
-        p{font-size:2.8rem;color:#0ff;margin:20px 0;}
-        .buttons{margin-top:60px;display:flex;gap:40px;flex-wrap:wrap;justify-content:center;}
-        .btn{padding:20px 50px;background:transparent;border:5px solid #0ff;color:#0ff;font-size:2rem;text-decoration:none;border-radius:15px;box-shadow:0 0 40px #0ff;transition:0.4s;}
-        .btn:hover{background:#0ff;color:#000;box-shadow:0 0 80px #0ff;transform:scale(1.15);}
-        @keyframes flicker{0%,100%{opacity:1;box-shadow:0 0 100px #0ff;}50%{opacity:0.9;box-shadow:0 0 120px #0ff;}}
-        @keyframes glow{from{text-shadow:0 0 30px #0ff;}to{text-shadow:0 0 80px #0ff;}}
+        .billboard{background:rgba(0,0,0,0.8);padding:30px 70px;border:5px solid #0ff;box-shadow:0 0 70px #0ff;border-radius:20px;text-align:center;max-width:90%;}
+        h1{font-size:5.5rem;color:#0ff;text-shadow:0 0 40px #0ff;margin-bottom:15px;}
+        p{font-size:2rem;color:#0ff;margin:15px 0;}
+        .buttons{margin-top:40px;display:flex;gap:25px;flex-wrap:wrap;justify-content:center;}
+        .btn{padding:14px 35px;background:rgba(0,0,0,0.8);border:4px solid #0ff;color:#0ff;font-size:1.6rem;text-decoration:none;border-radius:50px;box-shadow:0 0 30px #0ff;transition:0.4s;font-weight:bold;}
+        .btn:hover{background:#0ff;color:#000;box-shadow:0 0 50px #0ff;transform:scale(1.1);}
+        @media (max-width:768px){
+            h1{font-size:4rem;}
+            p{font-size:1.5rem;}
+            .btn{font-size:1.3rem;padding:12px 25px;}
+        }
     </style>
 </head>
 <body>
 
-    <!-- SENİN VİDEON -->
-    <video autoplay muted loop playsinline>
+    <!-- SENİN MP4 %100 ÇALIŞACAK ŞEKİLDE -->
+    <video autoplay muted loop playsinline preload="auto">
         <source src="mylivewallpapers.com-Pixel-Bad-City.mp4" type="video/mp4">
-        Tarayıcın video desteklemiyor.
     </video>
 
     <div class="overlay">
