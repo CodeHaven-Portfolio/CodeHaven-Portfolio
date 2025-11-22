@@ -1,23 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Pixel Yağmur (intro)
+    // Pixel Yağmur - KARARTTIM + AZALTTIM + YAVAŞLATTIM
     const canvas = document.getElementById("pixelRain");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     const drops = [];
-    for(let i = 0; i < 600; i++) {
+    // 600'den 250'ye düşürdüm → daha az yağmur
+    for(let i = 0; i < 250; i++) {
         drops.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            speed: Math.random() * 10 + 6,
-            size: Math.floor(Math.random() * 4) + 2
+            // hızı azalttım → daha ağır düşüyor
+            speed: Math.random() * 6 + 4,
+            size: Math.floor(Math.random() * 3) + 2
         });
     }
 
     function drawPixelRain() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(0, 255, 255, 0.7)";
+        // rengi kararttım: rgba(0, 255, 255, 0.7) → rgba(0, 180, 200, 0.4)
+        ctx.fillStyle = "rgba(0, 180, 200, 0.4)";
         drops.forEach(d => {
             ctx.fillRect(d.x, d.y, d.size, d.size * 6);
             d.y += d.speed;
@@ -27,25 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     drawPixelRain();
 
-    // START butonu - TIKLANDIĞI ANDA HEMEN GEÇİŞ
+    // START butonu - geçiş aynı (hızlı ve akıcı)
     document.getElementById("startBtn").addEventListener("click", () => {
         const curtain = document.getElementById("curtain");
-        curtain.classList.add("active"); // soldan hızlı geliyor
+        curtain.classList.add("active");
 
-        // Perde yarı yolda bile olsa hemen portfolio açılıyor (gecikme sıfır)
         setTimeout(() => {
             document.getElementById("intro").style.display = "none";
             document.getElementById("portfolio").style.display = "block";
             startMatrix();
-            
-            // Perdeyi tam kapattıktan sonra sağa kaydır (gölge bitmeden geçiş olur)
             setTimeout(() => {
                 curtain.classList.add("close");
             }, 300);
-        }, 800); // 0.8 saniyede geçiş başlıyor, ultra akıcı
+        }, 800);
     });
 
-    // Matrix yağmuru
+    // Matrix aynı
     function startMatrix() {
         const m = document.getElementById("matrixRain");
         const c = m.getContext("2d");
