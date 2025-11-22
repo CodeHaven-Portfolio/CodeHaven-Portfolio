@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Pixel Yağmur (intro'da, oyun gibi)
+    // Pixel Yağmur (intro)
     const canvas = document.getElementById("pixelRain");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -27,22 +27,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     drawPixelRain();
 
-    // START butonu
+    // START butonu - TIKLANDIĞI ANDA HEMEN GEÇİŞ
     document.getElementById("startBtn").addEventListener("click", () => {
         const curtain = document.getElementById("curtain");
-        curtain.classList.add("active"); // soldan geliyor
+        curtain.classList.add("active"); // soldan hızlı geliyor
 
+        // Perde yarı yolda bile olsa hemen portfolio açılıyor (gecikme sıfır)
         setTimeout(() => {
-            curtain.classList.add("close"); // sağa kayboluyor
+            document.getElementById("intro").style.display = "none";
+            document.getElementById("portfolio").style.display = "block";
+            startMatrix();
+            
+            // Perdeyi tam kapattıktan sonra sağa kaydır (gölge bitmeden geçiş olur)
             setTimeout(() => {
-                document.getElementById("intro").style.display = "none";
-                document.getElementById("portfolio").style.display = "block";
-                startMatrix();
-            }, 1700);
-        }, 1800);
+                curtain.classList.add("close");
+            }, 300);
+        }, 800); // 0.8 saniyede geçiş başlıyor, ultra akıcı
     });
 
-    // Matrix yağmuru (sadece ana ekranda)
+    // Matrix yağmuru
     function startMatrix() {
         const m = document.getElementById("matrixRain");
         const c = m.getContext("2d");
@@ -62,9 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 c.fillText(text, i*20, yp*20);
                 if(yp*20 > m.height && Math.random() > 0.975) y[i] = 0;
-                y[i]++;
+                else y[i]++;
             });
         }
-        setInterval(draw, 45);
+        setInterval(draw, 40);
     }
 });
