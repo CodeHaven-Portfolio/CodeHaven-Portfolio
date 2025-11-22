@@ -1,25 +1,49 @@
 * { margin:0; padding:0; box-sizing:border-box; }
-body { overflow:hidden; font-family:'Courier New', monospace; }
+body { overflow:hidden; }
 
+/* Intro */
 #intro { position:fixed; top:0; left:0; width:100%; height:100%; background:url('https://files.catbox.moe/0e1l2k.jpg') center/cover no-repeat; z-index:10; }
 #pixelRain { position:absolute; top:0; left:0; width:100%; height:100%; image-rendering:pixelated; }
 
-.billboard { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:650px; height:380px; background:rgba(0,8,20,0.95); border:6px solid #00ffff; box-shadow:0 0 80px #00ffff, inset 0 0 40px rgba(0,255,255,0.3); }
-.gui { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
-.gui h1 { font-size:4.5rem; color:#00ffff; text-shadow:0 0 30px #00ffff; letter-spacing:8px; }
-#startBtn { margin-top:40px; padding:20px 90px; font-size:2.8rem; background:transparent; border:4px solid #00ffff; color:#00ffff; cursor:pointer; transition:all 0.4s; box-shadow:0 0 40px #00ffff; }
-#startBtn:hover { background:#00ffff; color:#000; box-shadow:0 0 60px #00ffff; }
+/* Pano - tam senin resmin ortasındaki panoya göre boyutlandırdım */
+.billboard { 
+    position:absolute; 
+    top:50%; left:50%; 
+    transform:translate(-50%,-50%); 
+    width:680px; height:360px; 
+    background:rgba(0,5,15,0.95); 
+    border:6px solid #00ffff; 
+    box-shadow:0 0 80px #00ffff, inset 0 0 40px rgba(0,255,255,0.2);
+    display:flex; align-items:center; justify-content:center;
+}
+#startBtn { 
+    padding:22px 100px; 
+    font-size:3.2rem; 
+    background:transparent; 
+    border:5px solid #00ffff; 
+    color:#00ffff; 
+    cursor:pointer; 
+    font-family:'Courier New', monospace;
+    letter-spacing:5px;
+    transition:all 0.4s; 
+    box-shadow:0 0 50px #00ffff;
+}
+#startBtn:hover { 
+    background:#00ffff; 
+    color:#000; 
+    box-shadow:0 0 80px #00ffff;
+}
 
 /* Perde */
-#curtain { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:20; transform:translateX(-100%); transition:transform 1.8s cubic-bezier(0.25,0.8,0.25,1); }
+#curtain { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:20; transform:translateX(-100%); transition:transform 1.6s ease-in-out; }
 #curtain.active { transform:translateX(0); }
 #curtain.close { transform:translateX(100%); }
 
 /* Portfolio */
 #portfolio { position:fixed; top:0; left:0; width:100%; height:100%; z-index:5; display:none; background:#000; }
-#matrixRain { position:absolute; top:0; left:0; width:100%; height:100%; }
 .content { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#0f0; z-index:10; }
-.content h1 { font-size:8rem; text-shadow:0 0 40px #0f0; }
-.content h2 { font-size:3.5rem; margin:30px 0; }
-.links .btn { display:inline-block; margin:20px; padding:16px 50px; border:3px solid #0f0; color:#0f0; text-decoration:none; transition:0.3s; }
-.links .btn:hover { background:#0f0; color:#000; box-shadow:0 0 40px #0f0; }
+.content h1 { font-size:8.5rem; text-shadow:0 0 50px #0f0; letter-spacing:10px; }
+.content h2 { font-size:3.8rem; margin:30px 0; }
+.content p { font-size:1.8rem; margin-bottom:50px; }
+.links .btn { display:inline-block; margin:25px; padding:18px 55px; border:3px solid #0f0; color:#0f0; text-decoration:none; font-size:1.4rem; transition:0.3s; }
+.links .btn:hover { background:#0f0; color:#000; box-shadow:0 0 50px #0f0; }
