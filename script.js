@@ -1,35 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Pixel Yağmur (intro sadece)
+    // Pixel Yağmur (intro'da, oyun gibi)
     const canvas = document.getElementById("pixelRain");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    ctx.imageSmoothingEnabled = false;
 
     const drops = [];
-    for(let i = 0; i < 500; i++) {
+    for(let i = 0; i < 600; i++) {
         drops.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            speed: Math.random() * 8 + 4,
-            length: Math.random() * 15 + 10,
-            color: "rgba(0, 255, 255, 0.8)"
+            speed: Math.random() * 10 + 6,
+            size: Math.floor(Math.random() * 4) + 2
         });
     }
 
-    function pixelRain() {
+    function drawPixelRain() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(0, 255, 255, 0.7)";
         drops.forEach(d => {
-            ctx.fillStyle = d.color;
-            for(let i = 0; i < d.length; i += 4) {
-                ctx.fillRect(d.x, d.y + i, 3, 8);
-            }
+            ctx.fillRect(d.x, d.y, d.size, d.size * 6);
             d.y += d.speed;
             if(d.y > canvas.height) d.y = -20;
         });
-        requestAnimationFrame(pixelRain);
+        requestAnimationFrame(drawPixelRain);
     }
-    pixelRain();
+    drawPixelRain();
 
     // START butonu
     document.getElementById("startBtn").addEventListener("click", () => {
@@ -41,34 +37,34 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 document.getElementById("intro").style.display = "none";
                 document.getElementById("portfolio").style.display = "block";
-                startMatrixRain();
-            }, 1900);
-        }, 2000);
+                startMatrix();
+            }, 1700);
+        }, 1800);
     });
 
-    // Matrix Yağmuru (sadece portfolio ekranında)
-    function startMatrixRain() {
-        const mCanvas = document.getElementById("matrixRain");
-        const mCtx = mCanvas.getContext("2d");
-        mCanvas.width = window.innerWidth;
-        mCanvas.height = window.innerHeight;
+    // Matrix yağmuru (sadece ana ekranda)
+    function startMatrix() {
+        const m = document.getElementById("matrixRain");
+        const c = m.getContext("2d");
+        m.width = window.innerWidth;
+        m.height = window.innerHeight;
 
         const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-        const cols = mCanvas.width / 20;
-        const drops = Array(Math.floor(cols)).fill(1);
+        const cols = m.width / 20;
+        const y = Array(Math.floor(cols)).fill(0);
 
         function draw() {
-            mCtx.fillStyle = "rgba(0,0,0,0.05)";
-            mCtx.fillRect(0,0,mCanvas.width,mCanvas.height);
-            mCtx.fillStyle = "#0f0";
-            mCtx.font = "15px monospace";
-            drops.forEach((y,i) => {
-                const text = chars[Math.floor(Math.random()*chars.length)];
-                mCtx.fillText(text, i*20, y*20);
-                if(y*20 > mCanvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
+            c.fillStyle = "rgba(0,0,0,0.05)";
+            c.fillRect(0,0,m.width,m.height);
+            c.fillStyle = "#0f0";
+            c.font = "16px monospace";
+            y.forEach((yp, i) => {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                c.fillText(text, i*20, yp*20);
+                if(yp*20 > m.height && Math.random() > 0.975) y[i] = 0;
+                y[i]++;
             });
         }
-        setInterval(draw, 40);
+        setInterval(draw, 45);
     }
 });
