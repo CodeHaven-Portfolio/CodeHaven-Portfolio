@@ -5,7 +5,7 @@ body { overflow:hidden; }
 #intro { position:fixed; top:0; left:0; width:100%; height:100%; background:url('https://files.catbox.moe/63xlcb.png') center/cover no-repeat; z-index:10; }
 #pixelRain { position:absolute; top:0; left:0; width:100%; height:100%; image-rendering:pixelated; }
 
-/* Pano - çerçeve tamamen kalktı, buton tam sığıyor */
+/* Pano - çerçeve yok */
 .billboard { 
     position:absolute; top:50%; left:50%; 
     transform:translate(-50%,-50%); 
@@ -14,31 +14,32 @@ body { overflow:hidden; }
     display:flex; align-items:center; justify-content:center;
 }
 
-/* START butonu - baya küçüldü, panoya tam sığıyor */
+/* START butonu - baya küçüldü, çerçeve yok */
 #startBtn { 
-    padding:18px 80px; 
-    font-size:2.8rem; 
+    padding:14px 60px; 
+    font-size:2.2rem; 
     background:transparent; 
-    border:6px solid #00ffff; 
+    border:none; 
     color:#00ffff; 
     cursor:pointer; 
     font-family:'Courier New', monospace;
     letter-spacing:6px;
+    text-shadow:0 0 30px #00ffff;
     transition:all 0.5s; 
-    box-shadow:0 0 50px #00ffff;
 }
 #startBtn:hover { 
     background:#00ffff; 
     color:#000; 
-    box-shadow:0 0 90px #00ffff;
+    text-shadow:0 0 60px #00ffff;
+    box-shadow:0 0 60px #00ffff;
 }
 
-/* Perde - genişlik baya uzadı (3 saniye yavaş geçiş) */
-#curtain { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:20; transform:translateX(-100%); transition:transform 3s ease-in-out; }
+/* Perde - baya uzadı (4 saniye) */
+#curtain { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:20; transform:translateX(-100%); transition:transform 4s ease-in-out; }
 #curtain.active { transform:translateX(0); }
 #curtain.close { transform:translateX(100%); }
 
-/* Portfolio - Roblox Developer yazısı */
+/* Portfolio aynı */
 #portfolio { position:fixed; top:0; left:0; width:100%; height:100%; z-index:5; display:none; background:#000; }
 .content { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#0f0; z-index:10; }
 .content h1 { font-size:8.5rem; text-shadow:0 0 60px #0f0, 0 0 120px #0f0; letter-spacing:12px; }
